@@ -1,16 +1,17 @@
 /// time complexity -> O(n^2)
 /// unstable
+// TODO: make it in-place
 pub fn sort<T: PartialOrd>(vec: &mut Vec<T>) -> Vec<T> {
     let len = vec.len();
     let mut xs = Vec::with_capacity(len);
     for _ in 0..len {
-        let i = find_smallest(&vec);
+        let i = find_smallest_index(&vec);
         xs.push(vec.swap_remove(i));
     }
     xs
 }
 
-fn find_smallest<T: PartialOrd>(xs: &Vec<T>) -> usize {
+fn find_smallest_index<T: PartialOrd>(xs: &Vec<T>) -> usize {
     let mut smallest = 0;
     for (i, x) in xs.iter().enumerate() {
         if *x < xs[smallest] {
@@ -56,24 +57,24 @@ mod tests {
     }
 
     #[test]
-    fn find_smallest_from_empty_vec() {
+    fn find_smallest_index_from_empty_vec() {
         let vec: Vec<i32> = vec![];
-        assert_eq!(0, find_smallest(&vec));
+        assert_eq!(0, find_smallest_index(&vec));
     }
     #[test]
-    fn find_smallest_from_vec_with_one_item() {
-        assert_eq!(0, find_smallest(&vec![1]));
+    fn find_smallest_index_from_vec_with_one_item() {
+        assert_eq!(0, find_smallest_index(&vec![1]));
     }
     #[test]
-    fn find_smallest_from_vec_with_two_items() {
-        assert_eq!(1, find_smallest(&vec![2, 1]));
+    fn find_smallest_index_from_vec_with_two_items() {
+        assert_eq!(1, find_smallest_index(&vec![2, 1]));
     }
     #[test]
-    fn find_smallest_from_vec_with_smallest_in_middle() {
-        assert_eq!(1, find_smallest(&vec![2, 1, 3]));
+    fn find_smallest_index_from_vec_with_smallest_in_middle() {
+        assert_eq!(1, find_smallest_index(&vec![2, 1, 3]));
     }
     #[test]
-    fn find_smallest_from_vec_with_duplicates() {
-        assert_eq!(1, find_smallest(&vec![2, 1, 3, 1]));
+    fn find_smallest_index_from_vec_with_duplicates() {
+        assert_eq!(2, find_smallest_index(&vec![2, 3, 1, 3, 1]));
     }
 }
